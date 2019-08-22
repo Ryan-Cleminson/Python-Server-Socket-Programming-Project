@@ -25,16 +25,21 @@ while True:
     print('Ready to serve...')
     connectionSocket, addr = serverSocket.accept() #Fill in start              #Fill in end          
     try:
-        message = connection.recv(1024).decode('utf-8') #Fill in start          #Fill in end     
+        message = connectionSocket.recv(1024) #Fill in start          #Fill in end     
         print(message)          
         filename = message.split()[1]                 
         f = open(filename[1:])                        
-        outputdata = ??? #Fill in start       #Fill in end                   
-        #Send one HTTP header line into socket
-        # -> Send back a responce message to computer - I think 200 OK?
+        outputdata =  #Fill in start -> Not sure what they want here      #Fill in end        
+
+        #Send one HTTP header line into socket:
+            # -> Not sure what HTTP header means but to work 
+            # with TCP i think we should Send back a responce 
+            # message to computer - I think 200 OK?
 
         #Fill in start
-        #Fill in end                
+
+        #Fill in end    
+            
         #Send the content of the requested file to the client
         for i in range(0, len(outputdata)):           
             connectionSocket.send(outputdata[i].encode())
@@ -43,10 +48,12 @@ while True:
         connectionSocket.close()
     except IOError:
         #Send response message for file not found
-        #Fill in start        
+        #Fill in start
+                
         #Fill in end
         #Close client socket
         #Fill in start
+        connectionSocket.close()
         #Fill in end            
 serverSocket.close()
 sys.exit()#Terminate the program after sending the corresponding data                                    
