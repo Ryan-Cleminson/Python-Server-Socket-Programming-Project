@@ -2,28 +2,38 @@
 from socket import *
 import sys # In order to terminate the program
 
+serverSocket = socket(AF_INET, SOCK_STREAM)
 #Prepare a sever socket
+
 #Fill in start
 print('Creating Socket')
-SERVERHOST = '10.0.0.147'	
-SERVERPORT = 12000	
-serverSocket = socket(AF_INET, SOCK_STREAM)
+print('Getting hostname')
+SERVERHOST = socket.gethostname()	
+SERVERPORT = 12000
 print('Socket created')
+
 print('Creating Bind')
-serverSocket.bind((SERVERHOST, serverPort))
+serverSocket.bind((SERVERHOST, SERVERPORT))
 print('Bind Created')
+
+my_socket.listen(1)
+print('Listening For Friends')
 #Fill in end
 
 while True:
     #Establish the connection
     print('Ready to serve...')
-    connectionSocket, addr =   #Fill in start              #Fill in end          
+    connectionSocket, addr = my_socket.accept() #Fill in start              #Fill in end          
     try:
-        message =   #Fill in start          #Fill in end               
+        message = connection.recv(1024).decode('utf-8') #Fill in start          #Fill in end     
+        print(message)          
         filename = message.split()[1]                 
         f = open(filename[1:])                        
-        outputdata = #Fill in start       #Fill in end                   
+        outputdata = ???#Fill in start       #Fill in end                   
         #Send one HTTP header line into socket
+
+        #send back a responce message to computer - I think 200 OK?
+
         #Fill in start
         #Fill in end                
         #Send the content of the requested file to the client
