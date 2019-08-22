@@ -16,14 +16,14 @@ print('Creating Bind')
 serverSocket.bind((SERVERHOST, SERVERPORT))
 print('Bind Created')
 
-my_socket.listen(1)
+serverSocket.listen(1)
 print('Listening For Friends')
 #Fill in end
 
 while True:
     #Establish the connection
     print('Ready to serve...')
-    connectionSocket, addr = my_socket.accept() #Fill in start              #Fill in end          
+    connectionSocket, addr = serverSocket.accept() #Fill in start              #Fill in end          
     try:
         message = connection.recv(1024).decode('utf-8') #Fill in start          #Fill in end     
         print(message)          
