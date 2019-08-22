@@ -29,10 +29,9 @@ while True:
         print(message)          
         filename = message.split()[1]                 
         f = open(filename[1:])                        
-        outputdata = ???#Fill in start       #Fill in end                   
+        outputdata = ??? #Fill in start       #Fill in end                   
         #Send one HTTP header line into socket
-
-        #send back a responce message to computer - I think 200 OK?
+        # -> Send back a responce message to computer - I think 200 OK?
 
         #Fill in start
         #Fill in end                
