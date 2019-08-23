@@ -1,15 +1,15 @@
-#import socket module
+#import socket module!
 from socket import *
 import sys # In order to terminate the program
-
 serverSocket = socket(AF_INET, SOCK_STREAM)
-#Prepare a sever socket
+#Prepare a server socket
 
 #Fill in start
 print('Creating Socket')
 print('Getting hostname')
 SERVERHOST = socket.gethostname()	
 SERVERPORT = 12000
+serverSocket.bind((",serverPort)) # obtain and bind server addresses to the port number! 
 print('Socket created')
 
 print('Creating Bind')
@@ -28,32 +28,24 @@ while True:
         message = connectionSocket.recv(1024) #Fill in start          #Fill in end     
         print(message)          
         filename = message.split()[1]                 
-        f = open(filename[1:])                        
-        outputdata =  #Fill in start -> Not sure what they want here      #Fill in end        
-
-        #Send one HTTP header line into socket:
-            # -> Not sure what HTTP header means but to work 
-            # with TCP i think we should Send back a responce 
-            # message to computer - I think 200 OK?
-
-        #Fill in start
-
-        #Fill in end    
-            
-        #Send the content of the requested file to the client
-        for i in range(0, len(outputdata)):           
-            connectionSocket.send(outputdata[i].encode())
-        connectionSocket.send("\r\n".encode())
-        
-        connectionSocket.close()
-    except IOError:
-        #Send response message for file not found
-        #Fill in start
-                
-        #Fill in end
-        #Close client socket
-        #Fill in start
-        connectionSocket.close()
-        #Fill in end            
-serverSocket.close()
-sys.exit()#Terminate the program after sending the corresponding data                                    
+        f = open(filename[1:])             
+        outputdata = f.read() #Fill in start # stores the content of the file requested in a temporary filestate
+                   #Fill in end
+                           #Send one HTTP header line into socket
+                   connectionSocket.send('HTTP/1.1 200 OK\r\n\r\n'.encode()) #Sends a HTTP header line ! 
+                   ! for i in range(0, len(outputdata)):!
+                   #send content to the client 
+                   connectionSocket.send(outputdata[i].encode())! 
+                   connectionSocket.send("\r\n".encode())! 
+                   connectionSocket.close()! 
+                   !
+except IOError:!
+                           #Send response message for file not found
+        connectionSocket.send('HTTP/1.1 404 Not Found\r\nContent-Type: text/html\r\n\r\n<!
+doctype html><html><body><h1>404 Not Found &#9785<h1></body></html>')!
+        connectionSocket.close()  !
+               !
+                               #Close client socket
+serverSocket.close()!
+connectionSocket.close()!
+sys.exit() #Terminate the program after sending the corresponding data                                   
