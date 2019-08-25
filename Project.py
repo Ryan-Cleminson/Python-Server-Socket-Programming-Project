@@ -37,11 +37,14 @@ while True:
 
         connectionSocket.send("\r\n".encode())
         connectionSocket.close()    
+        print("Socket Recieved and Data Sent")
 
     except IOError:
-        connectionSocket.send('HTTP/1.1 404 Not Found\r\nContent-Type: text/html\r\n\r\n<')
-        connectionSocket.send("<html><head></head><body><h1>404 Not Found<h1></body></html>\r")
+
+        connectionSocket.send('HTTP/1.1 404 Not Found\r\n<'.encode())
+        connectionSocket.send('<html><head></head><body><h1>404 Not Found<h1></body></html>\r\n'.encode())
         connectionSocket.close()  
+        print("Socket Error and Data Sent")
 
 serverSocket.close()
 connectionSocket.close()
