@@ -53,14 +53,12 @@ print('Creating Bind')
 serverSocket.bind((gethostname(), SERVERPORT))
 print('Bind Created')
 
-print('Socket created')
-
-serverSocket.listen(1)
-print('Listening For Friends')
+serverSocket.listen(10)
+print('Listening For Connections')
 
 while True:
     # Establish the connection
-    serverSocket.listen(1)
+    serverSocket.listen(10)
     print('Ready to serve...')
     connectionSocket, addr = serverSocket.accept()
     newthread = ClientThread(addr, connectionSocket)
