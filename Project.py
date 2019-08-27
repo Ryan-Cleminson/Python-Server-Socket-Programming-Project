@@ -15,12 +15,12 @@ class ClientThread(threading.Thread):
         self.csocket.send(bytes("Hi, This is from Server..",'utf-8'))
         msg = ''
         while True:
-            data = self.csocket.recv(1024)
+            data = self.csocket.recv(1024) #Might not need ----------
             msg = data.decode()
             if msg == 'bye':
                 break
             print ("from client", msg)
-            self.csocket.send(bytes(msg,'UTF-8'))
+            self.csocket.send(bytes(msg,'UTF-8')) #----------------
             try:
 
                 message = connectionSocket.recv(1024)  # Fill in start          #Fill in end
