@@ -44,10 +44,10 @@ serverSocket = socket(AF_INET, SOCK_STREAM)
 print('Creating Socket')
 
 SERVERPORT = 12000
-HostName = '127.0.0.1'
+
 print('Creating Bind')
 
-serverSocket.bind((HostName, SERVERPORT))
+serverSocket.bind((gethostname(), SERVERPORT))
 print('Bind Created')
 
 print('Socket created')
