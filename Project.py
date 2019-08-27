@@ -14,16 +14,16 @@ class ClientThread(threading.Thread):
 
     def run(self):
         print ("Connection from : ", addr)
-        self.csocket.send(bytes("Hi, This is from Server..",'utf-8'))
+        #self.csocket.send(bytes("Hi, This is from Server..",'utf-8'))
         msg = ''
 
         while True:
 
-            self.csocket.send(bytes(msg,'UTF-8')) #----------------
+            self.csocket.send(bytes(msg,"UTF-8")) #----------------
             try:
 
                 message = connectionSocket.recv(1024)  # Fill in start          #Fill in end
-                print(message)
+                #print(message)
                 filename = message.split()[1]
                 f = open(filename[1:])
                 outputdata = f.read()  # Stores the file content in a temporary filestate
@@ -54,12 +54,12 @@ print('Creating Bind')
 serverSocket.bind((gethostname(), SERVERPORT))
 print('Bind Created')
 
-serverSocket.listen(1)
+serverSocket.listen(10)
 print('Listening For Connections')
 
 while True:
     # Establish the connection
-    serverSocket.listen(1)
+    serverSocket.listen(10)
     print('Ready to serve...')
     connectionSocket, addr = serverSocket.accept()
     newthread = ClientThread(addr, connectionSocket)
