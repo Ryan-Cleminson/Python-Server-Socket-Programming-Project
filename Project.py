@@ -26,7 +26,6 @@ class ClientThread(threading.Thread):
 
                 self.csocket.send("\r\n".encode())
                 print("Socket Recieved and Data Sent")
-                sys.exit() 
 
             except IOError:
 
@@ -35,7 +34,7 @@ class ClientThread(threading.Thread):
                 print("Socket Error and Data Sent")
         self.csocket.close() #closes the socket
         print("Client at ", addr, " disconnected...")
-        sys.exit() 
+        sys.exit()
 
 
 
