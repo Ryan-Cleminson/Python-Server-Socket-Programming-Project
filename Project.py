@@ -8,13 +8,16 @@ class ClientThread(threading.Thread):
     def __init__(self, address, clientsocket):
         threading.Thread.__init__(self)
         self.csocket = clientsocket
-        print ("New connection added: ", address)
+        print("\r\nNew connection added: ", address)
 
     def run(self):
-        print ("Connection from : ", addr)
+        print("Connection from : ", addr)
         while True:
             try:
                 message = self.csocket.recv(1024)  # Fill in start          #Fill in end
+                #msg = message.decode()
+                #if msg == 'bye':                   #Placeholders as they don't work for html Files
+                    #break
                 print(message)
                 filename = message.split()[1]
                 f = open(filename[1:])
@@ -25,7 +28,7 @@ class ClientThread(threading.Thread):
                     self.csocket.send(outputdata[i].encode())  # send content to the client
 
                 self.csocket.send("\r\n".encode())
-                print("Socket Recieved and Data Sent")
+                print("Socket Recieved and Data Sent\r\n")
 
             except IOError:
 
@@ -55,10 +58,10 @@ print('Socket created')
 serverSocket.listen(1)
 print('Listening For Friends')
 
+print('Ready to serve...')
 while True:
     # Establish the connection
-    serverSocket.listen(1)
-    print('Ready to serve...')
+
     connectionSocket, addr = serverSocket.accept()
     newthread = ClientThread(addr, connectionSocket)
     newthread.start()
