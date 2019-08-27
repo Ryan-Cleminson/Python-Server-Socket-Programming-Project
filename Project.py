@@ -5,21 +5,20 @@ import sys, threading  # In order to terminate the program
 
 # Class to create a new thread for each client socket connection
 class ClientThread(threading.Thread):
+
     def __init__(self,address,clientsocket):
         threading.Thread.__init__(self)
         self.csocket = clientsocket
         print ("New connection added: ", address)
 
+
     def run(self):
         print ("Connection from : ", addr)
         self.csocket.send(bytes("Hi, This is from Server..",'utf-8'))
         msg = ''
+
         while True:
-            data = self.csocket.recv(1024) #Might not need ----------
-            msg = data.decode()
-            if msg == 'bye':
-                break
-            print ("from client", msg)
+
             self.csocket.send(bytes(msg,'UTF-8')) #----------------
             try:
 
@@ -45,23 +44,18 @@ class ClientThread(threading.Thread):
                 print("Socket Error and Data Sent")
         print("Client at ", addr, " disconnected...")
 
-
 serverSocket = socket(AF_INET, SOCK_STREAM)
 
 # Prepare a server socket
 print('Creating Socket')
-
 SERVERPORT = 12000
 
 print('Creating Bind')
-
 serverSocket.bind((gethostname(), SERVERPORT))
 print('Bind Created')
 
-print('Socket created')
-
 serverSocket.listen(1)
-print('Listening For Friends')
+print('Listening For Connections')
 
 while True:
     # Establish the connection
@@ -69,9 +63,8 @@ while True:
     print('Ready to serve...')
     connectionSocket, addr = serverSocket.accept()
     newthread = ClientThread(addr, connectionSocket)
+    
     newthread.start()
-
-
 
 serverSocket.close()
 connectionSocket.close()
