@@ -14,7 +14,7 @@ class ClientThread(threading.Thread):
 
     def run(self):
         print ("Connection from : ", addr)
-        #self.csocket.send(bytes("Hi, This is from Server..",'utf-8'))
+        self.csocket.send(bytes("Hi, This is from Server..",'utf-8'))
         msg = ''
 
         while True:
@@ -25,7 +25,7 @@ class ClientThread(threading.Thread):
                 message = connectionSocket.recv(1024)  # Fill in start          #Fill in end
                 #print(message)
                 filename = message.split()[1]
-                f = open(filename[1:])
+                f = open(filename[1:]).encode()
                 outputdata = f.read()  # Stores the file content in a temporary filestate
 
                 connectionSocket.send('HTTP/1.1 200 OK\r\n\r\n'.encode())  # Sends a HTTP header line
@@ -35,6 +35,7 @@ class ClientThread(threading.Thread):
                 connectionSocket.send("\r\n".encode())
                 connectionSocket.close()
                 print("Socket Recieved and Data Sent")
+                sys.exit() 
 
             except IOError:
 
@@ -43,6 +44,7 @@ class ClientThread(threading.Thread):
                 connectionSocket.close()
                 print("Socket Error and Data Sent")
         print("Client at ", addr, " disconnected...")
+        sys.exit() 
 
 serverSocket = socket(AF_INET, SOCK_STREAM)
 
