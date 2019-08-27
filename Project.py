@@ -14,12 +14,8 @@ class ClientThread(threading.Thread):
         print ("Connection from : ", addr)
         while True:
             try:
-
                 message = self.csocket.recv(1024)  # Fill in start          #Fill in end
-                msg = message.decode()
-                if msg == 'bye':
-                    break
-                print(msg)
+                print(message)
                 filename = message.split()[1]
                 f = open(filename[1:])
                 outputdata = f.read()  # Stores the file content in a temporary filestate
@@ -29,16 +25,16 @@ class ClientThread(threading.Thread):
                     self.csocket.send(outputdata[i].encode())  # send content to the client
 
                 self.csocket.send("\r\n".encode())
-                self.csocket.close()
                 print("Socket Recieved and Data Sent")
 
             except IOError:
 
                 self.csocket.send('HTTP/1.1 404 Not Found\r\n<'.encode())
                 self.csocket.send('<html><head></head><body><h1>404 Not Found<h1></body></html>\r\n'.encode())
-                self.csocket.close()
                 print("Socket Error and Data Sent")
+        self.csocket.close() #closes the socket
         print("Client at ", addr, " disconnected...")
+
 
 
 serverSocket = socket(AF_INET, SOCK_STREAM)
@@ -47,25 +43,24 @@ serverSocket = socket(AF_INET, SOCK_STREAM)
 print('Creating Socket')
 
 SERVERPORT = 12000
-
+HostName = '127.0.0.1'
 print('Creating Bind')
 
-serverSocket.bind((gethostname(), SERVERPORT))
+serverSocket.bind((HostName, SERVERPORT))
 print('Bind Created')
 
-serverSocket.listen(10)
-print('Listening For Connections')
+print('Socket created')
+
+serverSocket.listen(1)
+print('Listening For Friends')
 
 while True:
     # Establish the connection
-    serverSocket.listen(10)
+    serverSocket.listen(1)
     print('Ready to serve...')
     connectionSocket, addr = serverSocket.accept()
     newthread = ClientThread(addr, connectionSocket)
     newthread.start()
 
 
-
-#serverSocket.close()
-#connectionSocket.close()
-#sys.exit()  # Terminate the program after sending the corresponding data
+#sys.exit()  # Terminate the program after sending the corresponding data has to go somewhere
