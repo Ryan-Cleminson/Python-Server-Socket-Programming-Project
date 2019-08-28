@@ -14,11 +14,12 @@ class ClientThread(threading.Thread):
         print ("Connection from : ", addr)
         while True:
             try:
-                message = self.csocket.recv(1024)  # Fill in start          #Fill in end
+                message = self.csocket.recv(1024)  # Fill in start 
                 print(message)
                 filename = message.split()[1]
-                f = open(filename[1:]).encode()
-                outputdata = f.read()  # Stores the file content in a temporary filestate
+
+                with open(filename[1:], mode='r' ,encoding='utf-8') as f:
+                    outputdata = f.read()  # Stores the file content in a temporary filestate
 
                 self.csocket.send('HTTP/1.1 200 OK\r\n\r\n'.encode())  # Sends a HTTP header line
                 for i in range(0, len(outputdata)):
@@ -45,21 +46,20 @@ serverSocket = socket(AF_INET, SOCK_STREAM)
 print('Creating Socket')
 
 SERVERPORT = 12000
-HostName = '127.0.0.1'
 print('Creating Bind')
 
-serverSocket.bind((HostName, SERVERPORT))
+serverSocket.bind((gethostname(), SERVERPORT))
 print('Bind Created')
 
 print('Socket created')
 
-serverSocket.listen(1)
+serverSocket.listen(10)
 print('Listening For Friends')
+
+print('Ready to serve...')
 
 while True:
     # Establish the connection
-    serverSocket.listen(1)
-    print('Ready to serve...')
     connectionSocket, addr = serverSocket.accept()
     newthread = ClientThread(addr, connectionSocket)
     newthread.start()
