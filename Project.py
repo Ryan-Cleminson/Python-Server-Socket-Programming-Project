@@ -8,26 +8,27 @@ class ClientThread(threading.Thread):
     def __init__(self, address, clientsocket):
         threading.Thread.__init__(self)
         self.csocket = clientsocket
-        print ("New connection added: ", address)
+        print("\r\nNew connection added: ", address)
 
     def run(self):
-        print ("Connection from : ", addr)
+        print("Connection from : ", addr)
         while True:
             try:
-                message = self.csocket.recv(1024)  # Fill in start 
+                message = self.csocket.recv(1024)  # Fill in start          #Fill in end
+                #msg = message.decode()
+                #if msg == 'bye':                   #Placeholders as they don't work for html Files
+                    #break
                 print(message)
                 filename = message.split()[1]
-
-                with open(filename[1:], mode='r' ,encoding='utf-8') as f:
-                    outputdata = f.read()  # Stores the file content in a temporary filestate
+                f = open(filename[1:])
+                outputdata = f.read()  # Stores the file content in a temporary filestate
 
                 self.csocket.send('HTTP/1.1 200 OK\r\n\r\n'.encode())  # Sends a HTTP header line
                 for i in range(0, len(outputdata)):
                     self.csocket.send(outputdata[i].encode())  # send content to the client
 
                 self.csocket.send("\r\n".encode())
-                print("Socket Recieved and Data Sent")
-                sys.exit() 
+                print("Socket Recieved and Data Sent\r\n")
 
             except IOError:
 
@@ -36,7 +37,7 @@ class ClientThread(threading.Thread):
                 print("Socket Error and Data Sent")
         self.csocket.close() #closes the socket
         print("Client at ", addr, " disconnected...")
-        sys.exit() 
+        sys.exit() # Terminate the program after sending the corresponding data has to go somewhere
 
 
 
@@ -57,12 +58,9 @@ serverSocket.listen(10)
 print('Listening For Friends')
 
 print('Ready to serve...')
-
 while True:
     # Establish the connection
+
     connectionSocket, addr = serverSocket.accept()
     newthread = ClientThread(addr, connectionSocket)
     newthread.start()
-
-
-#sys.exit()  # Terminate the program after sending the corresponding data has to go somewhere
