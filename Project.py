@@ -33,7 +33,7 @@ class ClientThread(threading.Thread):
 
             except IOError:
 
-                self.csocket.send('HTTP/1.1 404 Not Found\r\n<'.encode())
+                self.csocket.send('HTTP/1.1 404 Not Found\r\n<'.encode()) # if error socket 
                 self.csocket.send('<html><head></head><body><h1>404 Not Found<h1></body></html>\r\n'.encode())
                 print("Socket Error and Data Sent")
         self.csocket.close() #closes the socket
@@ -62,7 +62,7 @@ print('Listening For Friends')
 print('Ready to serve...')
 while True:
     # Establish the connection
-    # Written by Ryan, Tylar and Aayiush
+    # Written by Ryan, Tylar and Aayush
 
     connectionSocket, addr = serverSocket.accept()
     newthread = ClientThread(addr, connectionSocket)
