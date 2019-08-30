@@ -20,6 +20,7 @@ class ClientThread(threading.Thread):
                     #break
                 print(message)
                 filename = message.split()[1]
+                
                 f = open(filename[1:])
                 outputdata = f.read()  # Stores the file content in a temporary filestate
 
@@ -50,11 +51,12 @@ SERVERPORT = 12000
 print('Creating Bind')
 
 serverSocket.bind((gethostname(), SERVERPORT))
+
 print('Bind Created')
 
 print('Socket created')
 
-serverSocket.listen(10)
+serverSocket.listen(1)
 print('Listening For Friends')
 
 print('Ready to serve...')
