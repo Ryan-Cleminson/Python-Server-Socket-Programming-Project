@@ -62,6 +62,7 @@ print('Listening For Friends')
 print('Ready to serve...')
 while True:
     # Establish the connection
+    # Written by Ryan, Tylar and Aayiush
 
     connectionSocket, addr = serverSocket.accept()
     newthread = ClientThread(addr, connectionSocket)
