@@ -15,7 +15,7 @@ class ClientThread(threading.Thread):
         while True:
             try:
                 message = self.csocket.recv(1024)  # Fill in start          #Fill in end
-                #msg = message.decode()
+                message = message.decode()
                 #if msg == 'bye':                   #Placeholders as they don't work for html Files
                     #break
                 print(message)
@@ -63,4 +63,4 @@ while True:
 
     connectionSocket, addr = serverSocket.accept()
     newthread = ClientThread(addr, connectionSocket)
-    newthread.start()
+    newthread.run()
