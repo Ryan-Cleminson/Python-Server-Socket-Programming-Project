@@ -8,19 +8,20 @@ class ClientThread(threading.Thread):
     def __init__(self, address, clientsocket):
         threading.Thread.__init__(self)
         self.csocket = clientsocket
-        print("\r\nNew connection added: ", address)
+        self.caddr = address
+        print("\r\nNew connection added: ", self.caddr )
 
-    def run(self):
-        print("Connection from : ", addr)
+    def run1(self):
+        print("Connection from : ", self.caddr )
         while True:
             try:
+                
                 message = self.csocket.recv(1024)  # Fill in start          #Fill in end
                 message = message.decode()
                 #if msg == 'bye':                   #Placeholders as they don't work for html Files
                     #break
                 print(message)
                 filename = message.split()[1]
-                
                 f = open(filename[1:])
                 outputdata = f.read()  # Stores the file content in a temporary filestate
 
@@ -29,16 +30,21 @@ class ClientThread(threading.Thread):
                     self.csocket.send(outputdata[i].encode())  # send content to the client
 
                 self.csocket.send("\r\n".encode())
+                
                 print("Socket Recieved and Data Sent\r\n")
+                connectionSocket, addr = serverSocket.accept()
+                newthread = ClientThread(addr, connectionSocket)
+                newthread.run1()
 
             except IOError:
 
                 self.csocket.send('HTTP/1.1 404 Not Found\r\n<'.encode()) # if error socket 
                 self.csocket.send('<html><head></head><body><h1>404 Not Found<h1></body></html>\r\n'.encode())
+                self.csocket.close() #closes the socket
                 print("Socket Error and Data Sent")
         self.csocket.close() #closes the socket
-        print("Client at ", addr, " disconnected...")
-        sys.exit() # Terminate the program after sending the corresponding data has to go somewhere
+        print("Client at ", self.caddr , " disconnected...")
+         # Terminate the program after sending the corresponding data has to go somewhere
 
 
 
@@ -56,14 +62,16 @@ print('Bind Created')
 
 print('Socket created')
 
-serverSocket.listen(1)
+serverSocket.listen(10)
 print('Listening For Friends')
 
-print('Ready to serve...')
 while True:
     # Establish the connection
     # Written by Ryan, Tylar and Aayush
+    print('Ready to serve...1')
 
     connectionSocket, addr = serverSocket.accept()
     newthread = ClientThread(addr, connectionSocket)
-    newthread.run()
+    newthread.run1()
+    print('Ready to serve...2')
+    
