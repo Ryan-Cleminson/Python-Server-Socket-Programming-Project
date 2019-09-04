@@ -17,11 +17,11 @@ while True:
     print('Ready to serve...')
     connectionSocket, addr = serverSocket.accept()
     print('Connection Initiated with: ', addr)
-    
+
     try:
 
         message = connectionSocket.recv(1024)
-        if message != '':
+        if message != b'':
             print('The Message is: ', message)
             filename = message.split()[1]
             print('File name is: ', filename)
