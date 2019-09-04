@@ -47,7 +47,7 @@ serverSocket = socket(AF_INET, SOCK_STREAM)
 # Prepare a server socket
 print('Creating Socket')
 
-SERVERPORT = 12000
+SERVERPORT = 80
 print('Creating Bind')
 
 serverSocket.bind((gethostname(), SERVERPORT))
