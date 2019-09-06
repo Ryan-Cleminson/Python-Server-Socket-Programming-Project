@@ -2,29 +2,29 @@
 from socket import *
 import sys # In order to terminate the program
 
-serverSocket = socket(AF_INET, SOCK_STREAM)
+serverSocket = socket(AF_INET, SOCK_STREAM) # AF_INET = IPV6, SOCK_STREAM = TCP
 #Prepare a sever socket
 #assign a port number
 print('Creating Socket')
-SERVERPORT = 80
+SERVERPORT = 80 # Constant that is assigned port 80
 print('Creating Bind')
-serverSocket.bind(('', SERVERPORT))#attain and bind serverr address with port number
-serverSocket.listen(10)
+serverSocket.bind(('', SERVERPORT)) # Attain and bind server address with port number
+serverSocket.listen(1) # Listens for a singular connection
 print('Listening For Connections')
-
-
 
 while True:
     print('Ready to serve...')
-    connectionSocket, addr = serverSocket.accept() #establish connection
-    print('Connection Initiated with: ', addr)
+    connectionSocket, addr = serverSocket.accept() # Establishes connection
+    print('Connection Initiated with: ', addr) # Prints address
 
     try:
 
-        message = connectionSocket.recv(1024) #receives the request message from the client
-        if message != b'':
+        message = connectionSocket.recv(1024) # Receives the request message from the client
+        if message != b'': 
             print('The Message is: ', message)
+
             filename = message.split()[1]#extract the second part of HTTP header identiﬁed by [1]
+
             print('File name is: ', filename)
             f = open(filename[1:]) # because the second part of the HTTP header includes a '/', 
             #this instructs to read from the second character expressed through 
