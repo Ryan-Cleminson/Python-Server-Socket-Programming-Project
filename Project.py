@@ -20,7 +20,7 @@ while True:
 
         message = connectionSocket.recv(1024) # Receives the request message from the client
         if message != b'': 
-            print('The Message is: ', message)
+            print('The Message is: ', message.decode())
 
             filename = message.split()[1]#extract the second part of HTTP header identiﬁed by [1]
 
